@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizare Date</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_actualizare.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Actualizare Date</h1>
+        <form>
+            <label for="dropdown">Selectează tipul de date pentru actualizare:</label>
+            <select id="dropdown" name="options" onchange="handleDropdownChange()">
+                <option value="option0">Selectează</option>
+                <option value="option1">Actualizare date cursant</option>
+                <option value="option2">Actualizare date companie</option>
+                <option value="option3">Actualizare date comisie</option>
+                <option value="option4">Actualizare date curs</option>
+            </select>   
+        </form>
+
+    
+        <div id="cursantOptions" class="hidden">
+            <h2>Selectează câmpul pentru actualizare:</h2>
+            <button onclick="showForm('cursantNumeForm')">Nume</button>
+            <button onclick="showForm('cursantPrenumeForm')">Prenume</button>
+            <button onclick="showForm('cursantCNPForm')">CNP</button>
+            <button onclick="showForm('cursantParinteMamaForm')">Prenume mamă</button>
+            <button onclick="showForm('cursantParinteTataForm')">Prenume tată</button>
+            <button onclick="showForm('cursantLocNastereForm')">Locul nașterii</button>
+        </div>
+
+
+        <div id="cursantNumeForm" class="hidden">
+            <h2>Actualizare Nume Cursant</h2>
+            <form method="post">
+                <label for="cursantNume">Nume:</label>
+                <input type="text" id="cursantNume" name="cursantNume" value="" />
+                <hr />
+                <input type="submit" value="Actualizează">
+            </form>
+        </div>
+
+        <div id="cursantPrenumeForm" class="hidden">
+            <h2>Actualizare Prenume Cursant</h2>
+            <form method="post">
+                <label for="cursantPrenume">Prenume:</label>
+                <input type="text" id="cursantPrenume" name="cursantPrenume" value="" />
+                <hr />
+                <input type="submit" value="Actualizează">
+            </form>
+        </div>
+
+        <div id="cursantCNPForm" class="hidden">
+            <h2>Actualizare CNP Cursant</h2>
+            <form method="post">
+                <label for="cursantCNP">CNP:</label>
+                <input type="text" id="cursantCNP" name="cursantCNP" value="" />
+                <hr />
+                <input type="submit" value="Actualizează">
+            </form>
+        </div>
+
+        <div id="cursantParinteMamaForm" class="hidden">
+            <h2>Actualizare Prenume Mamă Cursant</h2>
+            <form method="post">
+                <label for="cursantParinteMama">Prenume mamă:</label>
+                <input type="text" id="cursantParinteMama" name="cursantParinteMama" value="" />
+                <hr />
+                <input type="submit" value="Actualizează">
+            </form>
+        </div>
+
+        <div id="cursantParinteTataForm" class="hidden">
+            <h2>Actualizare Prenume Tată Cursant</h2>
+            <form method="post">
+                <label for="cursantParinteTata">Prenume tată:</label>
+                <input type="text" id="cursantParinteTata" name="cursantParinteTata" value="" />
+                <hr />
+                <input type="submit" value="Actualizează">
+            </form>
+        </div>
+
+        <div id="cursantLocNastereForm" class="hidden">
+            <h2>Actualizare Locul Nașterii Cursant</h2>
+            <form method="post">
+                <label for="cursantLocNastere">Locul nașterii:</label>
+                <input type="text" id="cursantLocNastere" name="cursantLocNastere" value="" />
+                <hr />
+                <input type="submit" value="Actualizează">
+            </form>
+        </div>
+
+        <!-- Other forms remain the same, example for companie form -->
+        <div id="companieForm" class="hidden">
+            <h2>Actualizare Date Companie</h2>
+            <form method="post">
+                <label for="companieNume">Nume:</label>
+                <input type="text" id="companieNume" name="companieNume" value="" />
+                <hr />
+                <label for="companieOcupatie">Ocupație:</label>
+                <input type="text" id="companieOcupatie" name="companieOcupatie" value="" />
+                <hr />
+                <label for="companieCOR">COR:</label>
+                <input type="text" id="companieCOR" name="companieCOR" value="" />
+                <hr />
+                <input type="submit" value="Actualizează">
+            </form>
+        </div>
+
+        <!-- More forms for comisie and curs similar to above -->
+
+        <div class="link-box">
+            <a href="{{ url_for('home') }}" class="button">Înapoi la pagina principală</a>
+        </div>
+    </div>
+
+    <script>
+        function handleDropdownChange() {
+            var dropdown = document.getElementById('dropdown');
+            var cursantOptions = document.getElementById('cursantOptions');
+            var companieForm = document.getElementById('companieForm');
+            var comisieForm = document.getElementById('comisieForm');
+            var cursForm = document.getElementById('cursForm');
+
+            cursantOptions.classList.add('hidden');
+            companieForm.classList.add('hidden');
+            comisieForm.classList.add('hidden');
+            cursForm.classList.add('hidden');
+
+            if (dropdown.value === 'option1') {
+                cursantOptions.classList.remove('hidden');
+            } else if (dropdown.value === 'option2') {
+                companieForm.classList.remove('hidden');
+            } else if (dropdown.value === 'option3') {
+                comisieForm.classList.remove('hidden');
+            } else if (dropdown.value === 'option4') {
+                cursForm.classList.remove('hidden');
+            }
+        }
+
+        function showForm(formId) {
+            var forms = document.querySelectorAll('div[id$="Form"]');
+            forms.forEach(function(form) {
+                form.classList.add('hidden');
+            });
+            document.getElementById(formId).classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
