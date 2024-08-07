@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1>Adăugare Date</h1>
-        <form>
+        <form method="post">
             <label for="dropdown">Tipul de date introduse:</label>
             <select id="dropdown" name="options" onchange="handleDropdownChange()">
                 <option value="option0">Selectează</option>
@@ -18,7 +18,7 @@
                 <option value="option2">Introducere date companie</option>
                 <option value="option3">Introducere date comisie</option>
                 <option value="option4">Introducere date curs</option>
-            </select>   
+            </select>
         </form>
 
         <div id="cursantForm" class="hidden">
@@ -28,19 +28,19 @@
                 <input type="text" id="cursantNume" name="cursantNume" />
                 <hr />
                 <label for="cursantPrenume">Prenume:</label>
-                <input type="text" id="cursantPrenume" name="cursant_prenume" />
+                <input type="text" id="cursantPrenume" name="cursantPrenume" />
                 <hr />
                 <label for="cursantCNP">CNP:</label>
-                <input type="text" id="cursantCNP" name="cursant_cnp" />
+                <input type="text" id="cursantCNP" name="cursantCNP" />
                 <hr />
                 <label for="cursantParinteMama">Prenume mamă:</label>
-                <input type="text" id="cursantParinteMama" name="cursant_parinte_mama" />
+                <input type="text" id="cursantParinteMama" name="cursantParinteMama" />
                 <hr />
                 <label for="cursantParinteTata">Prenume tată:</label>
-                <input type="text" id="cursantParinteTata" name="cursant_parinte_tata" />
+                <input type="text" id="cursantParinteTata" name="cursantParinteTata" />
                 <hr />
                 <label for="cursantLocNastere">Locul nașterii:</label>
-                <input type="text" id="cursantLocNastere" name="cursant_loc_nastere" />
+                <input type="text" id="cursantLocNastere" name="cursantLocNastere" />
                 <hr />
                 <input type="submit">
             </form>
@@ -108,6 +108,7 @@
                 <input type="submit">
             </form>
         </div>
+
 
         <div class="link-box">
             <a href="{{ url_for('home') }}" class="button">Înapoi la pagina principală</a>

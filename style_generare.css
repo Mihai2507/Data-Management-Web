@@ -61,7 +61,7 @@ label {
     color: rgb(0, 0, 0);
     padding: 10px 24px;
     cursor: pointer;
-    font: 'sans serif'; 
+    font-family: 'Roboto', sans-serif;
     font-size: medium;
     margin-bottom: 10px;
 }
