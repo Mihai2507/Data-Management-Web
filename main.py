@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from adaugare import adauga_inregistrari
-from citire import citeste_date
-# from stergere import sterge_inregistrare
+from stergere import sterge_inregistrare
+from actualizare import actualizeaza_inregistrare
 
 app = Flask(__name__)
 
@@ -18,37 +18,35 @@ def adaugare():
             nume = request.form['cursantNume']
             prenume = request.form['cursantPrenume']
             cnp = request.form['cursantCNP']
+            judet_sector = request.form['cursantJudetSector']
+            localitate = request.form['cursantLocalitate']
             prenume_mama = request.form['cursantParinteMama']
             prenume_tata = request.form['cursantParinteTata']
+            data_nasterii = request.form['cursantDataNasterii']
             locul_nasterii = request.form['cursantLocNastere']
 
             cursant_data = {
                 'nume': nume,
                 'prenume': prenume,
                 'cnp': cnp,
+                'judet_sector': judet_sector,
+                'localitate': localitate,
                 'prenume_mama': prenume_mama,
                 'prenume_tata': prenume_tata,
-                'locul_nasterii': locul_nasterii,
+                'data_nasterii': data_nasterii,
+                'locul_nasterii': locul_nasterii
             }
             adauga_inregistrari(cursant_data, 'cursant')
 
         elif request.form['form_type'] == 'companie':
             nume = request.form['companieNume']
-            ocupatie = request.form['companieOcupatie']
-            cor = request.form['companieCOR']
             localitate = request.form['companieLocalitate']
             judet = request.form['companieJudet']
-            numar_registru = request.form['companieNrRegistru']
-            data_registru = request.form['companieDataRegistru']
 
             companie_data = {
                 'nume': nume,
-                'ocupatie': ocupatie,
-                'cor': cor,
                 'localitate': localitate,
                 'judet': judet,
-                'numar_registru': numar_registru,
-                'data_registru': data_registru,
             }
             adauga_inregistrari(companie_data, 'companie')
 
@@ -64,18 +62,23 @@ def adaugare():
             }
             adauga_inregistrari(comisie_data, 'comisie')
 
-
         elif request.form['form_type'] == 'curs':
             nume_curs = request.form['cursNume']
             descriere = request.form['cursDescriere']
-            data_incepere = request.form['cursData']
-            durata = request.form['cursDurata']
+            cor = request.form['cursCor']
+            nr_registru = request.form['cursNrRegistru']
+            data_incepere = request.form['cursDataIncepere']
+            data_finalizare = request.form['cursDataFinalizare']
+            data_examinare = request.form['cursDataExaminare']
 
             curs_data = {
                 'nume_curs': nume_curs,
                 'descriere': descriere,
+                'cor': cor,
+                'nr_registru': nr_registru,
                 'data_incepere': data_incepere,
-                'durata': durata
+                'data_finalizare': data_finalizare,
+                'data_examinare': data_examinare
             }
             adauga_inregistrari(curs_data, 'curs')
 
@@ -90,11 +93,27 @@ def generare_documente():
 
 @app.route('/actualizare_date', methods=['GET', 'POST'])
 def actualizare_date():
+    if request.method == 'POST':
+        table = request.form.get('table')
+        column = request.form.get('column')
+        old_value = request.form['old_value']
+        new_value = request.form.get('new_value')
+        if not table or not column or not new_value:
+            return "Error: Missing data in form", 400
+
+        actualizeaza_inregistrare(table, column, old_value, new_value)
+        return redirect(url_for('actualizare_date'))
     return render_template('actualizare_date.html')
 
 
 @app.route('/stergere_date', methods=['GET', 'POST'])
 def stergere_date():
+    if request.method == 'POST':
+        table = request.form['table']
+        column = request.form['column']
+        value = request.form['value']
+        sterge_inregistrare(table, column, value)
+        return redirect(url_for('stergere_date'))
     return render_template('stergere_date.html')
 
 
