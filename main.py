@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from adaugare import adauga_inregistrari
 from stergere import sterge_inregistrare
 from actualizare import actualizeaza_inregistrare
+from vizualizare import obtine_date
 
 app = Flask(__name__)
 
@@ -74,7 +75,7 @@ def adaugare():
             durata = request.form['cursDurata']
             anul_examinarii = request.form['cursAnulExaminarii']
             luna_examinarii = request.form['cursLunaExaminarii']
-            ziua_examinarii = request.form['cursExaminarii']
+            ziua_examinarii = request.form['cursZiuaExaminarii']
 
             curs_data = {
                 'nume_curs': nume_curs,
@@ -123,6 +124,35 @@ def stergere_date():
         sterge_inregistrare(table, column, value)
         return redirect(url_for('stergere_date'))
     return render_template('stergere_date.html')
+
+
+@app.route('/vizualizare_date')
+def vizualizare_date():
+    return render_template('vizualizare_date.html')
+
+
+@app.route('/api/cursanti')
+def api_cursanti():
+    date_cursanti = obtine_date('cursant')
+    return jsonify(date_cursanti)
+
+
+@app.route('/api/companii')
+def api_companii():
+    date_companii = obtine_date('companie')
+    return jsonify(date_companii)
+
+
+@app.route('/api/comisii')
+def api_comisii():
+    date_comisii = obtine_date('comisie')
+    return jsonify(date_comisii)
+
+
+@app.route('/api/cursuri')
+def api_cursuri():
+    date_cursuri = obtine_date('curs')
+    return jsonify(date_cursuri)
 
 
 if __name__ == '__main__':
